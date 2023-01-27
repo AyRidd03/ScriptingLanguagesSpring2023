@@ -25,7 +25,7 @@ vacations_per_year = float(input(f"{'Vacation Days per Year':.<{COLUMN_LENGTH}}"
 unadjusted_salary = salary_per_hour * hours_per_week * WEEKS_PER_YEAR  # Calculates unadjusted Salary
 
 adjusted_days_per_year = (days_per_week * WEEKS_PER_YEAR) - holidays_per_year - vacations_per_year  # Calculates Days
-adjusted_salary = salary_per_hour * (hours_per_week / 7) * adjusted_days_per_year  # Calculates adjusted Salary
+adjusted_salary = salary_per_hour * (hours_per_week / days_per_week) * adjusted_days_per_year  # Calculates adjusted Salary
 
 # End Display
 
@@ -33,5 +33,5 @@ print('=' * DASH_LENGTH)
 print(f"{'Unadjusted Salary':.<{COLUMN_LENGTH}}: ${unadjusted_salary:6,.2f}")
 print(f"{'Adjusted Salary':.<{COLUMN_LENGTH}}: ${adjusted_salary:6,.2f}")
 print('=' * DASH_LENGTH)
-print("Thank You For Using Annual Salary Calculations,")
+print("We've Done the Math,")
 print("Have a Nice Day!")
