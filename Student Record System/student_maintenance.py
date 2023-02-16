@@ -13,17 +13,27 @@ def add_student(student_list, new_student_id):
     print(LINE)
     student_f_name = input("Please insert the Student's First Name: ")  # To store first name into the student id later
     student_l_name = input("Please insert the Student's Last Name: ")  # To store last name into the student id later
-    student_list.update({new_student_id: (student_f_name, student_l_name)})
+    student_list[new_student_id] = (student_f_name, student_l_name)
     print(f"Student {student_f_name}, {student_l_name} has been added.")  # To Let the User Know
     print(LINE)
 
 
 def list_students(student_list):
     print(LINE)
+    if len(student_list) == 0:
+        print("No Students are Registered")
+        print(LINE)
+        return
+    print(LINE)
     print("Here's Your List of Students: ")
-    for id, student in student_list:  # Unpacks the Dictionary
-        for f_name, l_name in student.values():  # Unpacks the Tuple in the Dictionary
-            print(f"{id}: {f_name},{l_name}")
+    for student_id, student_name in student_list.items():  # Unpacks the Dictionary
+        for f_name, l_name in student_name:  # Unpacks the Tuple in the Dictionary
+            print(f"{student_id}: {f_name}, {l_name}")
+            print(f"f_name:{f_name}")
+            print(f"l_name: {l_name}")
+            print(f"student_name:{student_name}")
+            print(f"student_id:{student_id}")
+            print(f"student_list:{student_list}")
 
 
 def delete_student(student_list):
