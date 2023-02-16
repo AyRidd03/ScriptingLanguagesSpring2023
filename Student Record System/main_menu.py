@@ -16,9 +16,9 @@ import student_maintenance as sm    # student add, update, delete, list
 import data_validation as dv  # user input data validation
 
 # the following are module level dunders (metadata) for the authorship information
-__author__ = 'Debbie Johnson'
-__version__ = '1.0'
-__date__ = '2023.02.14'
+__author__ = 'Debbie Johnson edited by Ayden Riddle'
+__version__ = '1.1'
+__date__ = '2023.02.16'
 __status__ = 'Development'
 
 
