@@ -16,3 +16,10 @@
     Using the adjusted days per year times the hourly salary times the weekly hours, which are 
      divided by the days per week, the code calculates the Adjusted Annual Salary
     Then these Annual Salaries are displayed to the User.
+# Student Record System:
+    This Program should allow the user to access a preset student library and do the following:
+    > List all of the Students in the Records
+    > Add a Student to the Record
+    > Update a Student in the Record
+    > Delete a Student in the Record
+    > Have a User Friendly Experience and a built in Exit plan
