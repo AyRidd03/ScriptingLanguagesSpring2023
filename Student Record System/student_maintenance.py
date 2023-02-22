@@ -70,11 +70,11 @@ def update_student(student_list):
     old_l_name = l_name
     f_name = input(f"Please insert {f_name}'s new first name or push enter to continue : ")
     l_name = input(f"Please insert {l_name}'s new last name or push enter to continue : ")
-    if l_name == ' ' and f_name == ' ':
+    if l_name == '' and f_name == '':
         return
-    if l_name == ' ':
+    if l_name == '':
         l_name = old_l_name
-    if f_name == ' ':
+    if f_name == '':
         f_name = old_f_name
     user_confirmation = dv.get_yes_no(
         f"Are you Sure you wish to edit {old_f_name} {old_l_name} into {f_name} {l_name}? Y/N: ")  # To Doublecheck
