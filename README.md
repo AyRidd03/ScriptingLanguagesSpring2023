@@ -23,3 +23,9 @@
     > Update a Student in the Record
     > Delete a Student in the Record
     > Have a User Friendly Experience and a built in Exit plan
+# Random Password Generator:
+    This Program will help Users Generate a Secure Passwords
+    User will be able to:
+    > Evaluate their own password or a new password
+    > Generate a brand new password
+    > Recieve information on the Password and what can be improved
