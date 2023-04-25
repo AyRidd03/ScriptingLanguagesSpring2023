@@ -12,6 +12,8 @@ class PasswordValidator:
         self.debug = debug
 
     def is_valid(self, password):
+        if self.debug:
+            print(f"Debug: Starting {self.is_valid.__name__}")
         self.password = password
         print(PasswordValidator.LINE)
         if self.password is None:
@@ -25,28 +27,30 @@ class PasswordValidator:
         if self.is_caps_valid():
             print("Caps Valid")
         else:
-            print("Not Caps Valid")
+            print("Caps Invalid")
         print(PasswordValidator.LINE)
 
         if self.is_low_valid():
             print("Low Valid")
         else:
-            print("Not Low Valid")
+            print("Low Invalid")
         print(PasswordValidator.LINE)
 
         if self.is_num_valid():
             print("Num Valid")
         else:
-            print("Not Num Valid")
+            print("Num Invalid")
         print(PasswordValidator.LINE)
 
         if self.is_spec_valid():
             print("Spec Valid")
         else:
-            print("Not Spec Valid")
+            print("Spec Invalid")
         print(PasswordValidator.LINE)
 
     def is_caps_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.is_caps_valid.__name__}")
         count = 0
         for i in self.password:
             if i.isupper():
@@ -60,6 +64,8 @@ class PasswordValidator:
             return False
 
     def is_low_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.is_low_valid.__name__}")
         count = 0
         for i in self.password:
             if i.islower():
@@ -73,6 +79,8 @@ class PasswordValidator:
             return False
 
     def is_num_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.is_num_valid.__name__}")
         count = 0
         for i in self.password:
             if i in PasswordValidator.__NUMBERS:
@@ -85,6 +93,8 @@ class PasswordValidator:
             return False
 
     def is_spec_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.__ne__} . {self.is_spec_valid.__name__}")
         count = 0
         for i in self.password:
             if i not in PasswordValidator.__ALPHABET and i not in PasswordValidator.__NUMBERS:

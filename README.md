@@ -29,3 +29,11 @@
     > Evaluate their own password or a new password
     > Generate a brand new password
     > Recieve information on the Password and what can be improved
+# Data Validation:
+    This Program will help the User to Validate Data
+    User will be able to:
+    > Give the program a CSV file to validate
+    > Input data that can be confirmed as a number, email,
+        or other things I will describe as the project continues
+    > Recieve error handling based on what the data is or file reading errors
+    > Recieve a summary report of the data

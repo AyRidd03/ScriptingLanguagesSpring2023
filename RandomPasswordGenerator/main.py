@@ -2,7 +2,7 @@ import password_validator as pv
 
 
 def main():
-    pass_val = pv.PasswordValidator()
+    pass_val = pv.PasswordValidator(debug=True)
     insert = input("Please put in a password: ")
     pass_val.is_valid(insert)
 
