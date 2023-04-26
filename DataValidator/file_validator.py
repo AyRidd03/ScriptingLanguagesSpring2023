@@ -5,12 +5,18 @@ __author__ = 'Ayden Riddle'
 __version__ = '1.0'
 __date__ = '2023.04.25'
 __status__ = 'Development'
+
+import csv
 import re
+
+LINE = "=" * 40
 
 
 class FileValidator:
     def __init__(self, files=[]):
         self.files = files
+        self.phone_numbers = []
+        self.emails = []
 
     def add_file(self, file):
         self.files.append(file)
@@ -18,20 +24,38 @@ class FileValidator:
     def open_files(self):
             for fname in self.files:
                 try:
-                    with open(fname) as f:
-                        self.data_validate(f)
+                    self.data_validate(fname)
+                except StopIteration:
+                    print(f"ERROR: {fname} had a Stop Iteration Error and could not be continued.")
+                except FileNotFoundError:
+                    print(f"ERROR: {fname} could not be found.")
                 except:
-                    print(f"Error, {fname} could not be opened.")
+                    print(f"ERROR {fname} had an error and could not be opened or continued.")
+                print(LINE)
 
-    def data_validate(self, file):
+    def data_validate(self, fname):
         """
         Takes the given file and searches for pieces of data divided by strings and checks for valid data
         :param file:
         :return:
         """
+        file = open(fname, "r")
         print(f"File {file.name} Opened")
-        data = file.read()
+        data = list(csv.reader(file, delimiter=","))
+        file.close()
+        print(data)
+        print(LINE)
 
+        print(LINE)
+        for i in data:
+            for piece in i:
+                if self.phonevalid(piece):
+                    self.phone_numbers.append(piece)
+                elif self.emailvalid(piece):
+                    self.emails.append(piece)
+                else:
+                    print(f"{piece}, is not a valid piece of data")
+                print(LINE)
 
     def phonevalid(self, phone):
         """
@@ -61,3 +85,9 @@ class FileValidator:
         else:
             print(f"{email} is an invalid email")
             return False
+
+    def get_phone_numbers(self):
+        return self.phone_numbers
+
+    def get_emails(self):
+        return self.emails

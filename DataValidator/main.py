@@ -8,12 +8,7 @@ __status__ = 'Development'
 import file_validator as fv
 def main():
     print("Hi")
-    file_check = fv.FileValidator()
-    file_check.add_file("hello.csv")
-    file_check.add_file("bop")
-    file_check.open_files()
-    file_check.emailvalid("audentheninja@gmail.com")
-    file_check.phonevalid("402_639_4850")
+
 
 if __name__ == '__main__':
     # help('main_menu')  # used to display the script's docstring
