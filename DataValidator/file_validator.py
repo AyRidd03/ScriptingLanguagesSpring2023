@@ -20,11 +20,12 @@ class FileValidator:
 
     def add_file(self, file):
         self.files.append(file)
+        print(f"{file} has been added to the list of files")
 
     def open_files(self):
             for fname in self.files:
                 try:
-                    self.data_validate(fname)
+                    self.open_file(fname)
                 except StopIteration:
                     print(f"ERROR: {fname} had a Stop Iteration Error and could not be continued.")
                 except FileNotFoundError:
@@ -33,16 +34,26 @@ class FileValidator:
                     print(f"ERROR {fname} had an error and could not be opened or continued.")
                 print(LINE)
 
+    def open_file(self, fname):
+        try:
+            self.file = open(fname, "r")
+            print(f"File {file.name} Opened")
+        except StopIteration:
+            print(f"ERROR: {fname} had a Stop Iteration Error and could not be continued.")
+        except FileNotFoundError:
+            print(f"ERROR: {fname} could not be found.")
+        except:
+            print(f"ERROR {fname} had an error and could not be opened or continued.")
+        print(LINE)
     def data_validate(self, fname):
         """
         Takes the given file and searches for pieces of data divided by strings and checks for valid data
         :param file:
         :return:
         """
-        file = open(fname, "r")
-        print(f"File {file.name} Opened")
-        data = list(csv.reader(file, delimiter=","))
-        file.close()
+        self.open_file(fname)
+        data = list(csv.reader(self.file, delimiter=","))
+        self.file.close()
         print(data)
         print(LINE)
 
@@ -66,6 +77,11 @@ class FileValidator:
         regex = re.compile(r'([0-9]{3})([-_.])([0-9]{3})([-_.])([0-9]{4})')
         if re.fullmatch(regex, phone):
             print(f"{phone} is a valid phone #")
+            if phone not in self.phone_numbers:
+                print("Adding to list of Phone #'s")
+                self.phone_numbers.append(phone)
+            else:
+                print("This Phone # is already Added")
             return True
         else:
             print(f"{phone} is an invalid phone #")
@@ -81,6 +97,11 @@ class FileValidator:
 
         if re.fullmatch(regex, email):
             print(f"{email} is a valid email")
+            if email not in self.emails:
+                print("Adding to list of Emails")
+                self.emails.append(email)
+            else:
+                print("This Email is already Added")
             return True
         else:
             print(f"{email} is an invalid email")
@@ -91,3 +112,6 @@ class FileValidator:
 
     def get_emails(self):
         return self.emails
+
+    def get_file_names(self):
+        return self.files

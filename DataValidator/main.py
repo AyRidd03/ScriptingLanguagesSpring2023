@@ -6,8 +6,10 @@ __version__ = '1.0'
 __date__ = '2023.04.25'
 __status__ = 'Development'
 import file_validator as fv
+import validator_menu as vm
 def main():
-    print("Hi")
+    menu = vm.Menu()
+    menu.main_menu()
 
 
 if __name__ == '__main__':
