@@ -1,1 +1,51 @@
-class AdvancedValidator:
+import password_validator as pv
+
+
+class AdvancedValidator(pv.PasswordValidator):
+    __MIN_LENGTH = 7
+    __MAX_LENGTH = 15
+    __SPECIAL_CHARS = "-_;,."
+
+    def __init__(self, password=None, debug=False, generator=False):
+        pv.PasswordValidator.__init__(self, password=password, debug=debug, generator=generator)
+
+    def is_valid(self, password):
+        pv.PasswordValidator.is_valid(self, password)
+        if self.is_length_valid():
+            print("Length Valid")
+        else:
+            print("Length Invalid")
+            self.valid = False
+        if self.valid:
+            print(f"{self.password} is a Valid Password for the Advanced Password Validator")
+        else:
+            print(f"{self.password} is an Invalid Password for the Advanced Password Validator")
+
+    def is_length_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.is_length_valid.__name__}")
+        count = 0
+        for i in self.password:
+            count += 1
+        if not self.generator:
+            print(f"Your password has {count} length")
+            print(f"You need {AdvancedValidator.__MIN_LENGTH} minimum characters, "
+                  f"but not over {AdvancedValidator.__MAX_LENGTH}")
+        if AdvancedValidator.__MIN_LENGTH <= count <= AdvancedValidator.__MAX_LENGTH:
+            return True
+        else:
+            return False
+
+    def is_spec_valid(self):
+        if self.debug:
+            print(f"Debug: Starting {self.is_spec_valid.__name__}.")
+        count = 0
+        for i in self.password:
+            count += 1 if i in AdvancedValidator.__SPECIAL_CHARS else 0
+        if not self.generator:
+            print(f"Your password has {count} Special Character(s) within {AdvancedValidator.__SPECIAL_CHARS}")
+            print(f"You need {pv.PasswordValidator.MIN_SPEC_LETTERS} Special Character(s)")
+        if count >= pv.PasswordValidator.MIN_SPEC_LETTERS:
+            return True
+        else:
+            return False
