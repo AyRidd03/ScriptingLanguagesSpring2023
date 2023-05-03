@@ -42,6 +42,12 @@ class AdvancedValidator(pv.PasswordValidator):
         count = 0
         for i in self.password:
             count += 1 if i in AdvancedValidator.__SPECIAL_CHARS else 0
+            if i not in AdvancedValidator.__SPECIAL_CHARS \
+                    and i not in pv.PasswordValidator.ALPHABET \
+                    and i not in pv.PasswordValidator.NUMBERS:
+                if not self.generator:
+                    print(f"Your password has a Special Character(s) not within {AdvancedValidator.__SPECIAL_CHARS}")
+                return False
         if not self.generator:
             print(f"Your password has {count} Special Character(s) within {AdvancedValidator.__SPECIAL_CHARS}")
             print(f"You need {pv.PasswordValidator.MIN_SPEC_LETTERS} Special Character(s)")

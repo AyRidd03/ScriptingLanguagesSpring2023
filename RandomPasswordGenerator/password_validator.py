@@ -4,8 +4,8 @@ class PasswordValidator:
     __MIN_CAP_LETTERS = 1
     __MIN_LOW_LETTERS = 2
     MIN_SPEC_LETTERS = 2
-    __ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    __NUMBERS = "0123456789"
+    ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    NUMBERS = "0123456789"
 
     def __init__(self, password=None, debug=False, generator=False):
         self.password = password
@@ -96,7 +96,7 @@ class PasswordValidator:
             print(f"Debug: Starting {self.is_num_valid.__name__}")
         count = 0
         for i in self.password:
-            if i in PasswordValidator.__NUMBERS:
+            if i in PasswordValidator.NUMBERS:
                 count += 1
         if not self.generator:
             print(f"Your password has {count} Number(s)")
@@ -111,7 +111,7 @@ class PasswordValidator:
             print(f"Debug: Starting {self.is_spec_valid.__name__}.")
         count = 0
         for i in self.password:
-            if i not in PasswordValidator.__ALPHABET and i not in PasswordValidator.__NUMBERS:
+            if i not in PasswordValidator.ALPHABET and i not in PasswordValidator.NUMBERS:
                 count += 1
         if not self.generator:
             print(f"Your password has {count} Special Character(s)")

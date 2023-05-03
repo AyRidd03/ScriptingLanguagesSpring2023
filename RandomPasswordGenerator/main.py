@@ -1,11 +1,11 @@
 import password_validator as pv
 import advanced_validator as av
+import  password_generator as pg
 
 
 def main():
-    pass_val = av.AdvancedValidator(debug=True)
-    insert = input("Please put in a password: ")
-    pass_val.is_valid(insert)
+    pass_gen = pg.PasswordGenerator()
+    pass_gen.generate_password()
 
 
 if __name__ == '__main__':
