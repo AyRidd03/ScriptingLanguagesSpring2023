@@ -2,8 +2,8 @@ import password_validator as pv
 
 
 class AdvancedValidator(pv.PasswordValidator):
-    __MIN_LENGTH = 7
-    __MAX_LENGTH = 15
+    MIN_LENGTH = 7
+    MAX_LENGTH = 15
     __SPECIAL_CHARS = "-_;,."
 
     def __init__(self, password=None, debug=False, generator=False):
@@ -29,9 +29,9 @@ class AdvancedValidator(pv.PasswordValidator):
             count += 1
         if not self.generator:
             print(f"Your password has {count} length")
-            print(f"You need {AdvancedValidator.__MIN_LENGTH} minimum characters, "
-                  f"but not over {AdvancedValidator.__MAX_LENGTH}")
-        if AdvancedValidator.__MIN_LENGTH <= count <= AdvancedValidator.__MAX_LENGTH:
+            print(f"You need {AdvancedValidator.MIN_LENGTH} minimum characters, "
+                  f"but not over {AdvancedValidator.MAX_LENGTH}")
+        if AdvancedValidator.MIN_LENGTH <= count <= AdvancedValidator.MAX_LENGTH:
             return True
         else:
             return False

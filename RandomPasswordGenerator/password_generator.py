@@ -9,7 +9,9 @@ class PasswordGenerator(av.AdvancedValidator):
 
     def generate_password(self):
         while True:
-            self.password = ''.join(r.choices(s.ascii_letters + s.digits + s.punctuation, k=15))
+            self.password = ''.join(r.choices(s.ascii_letters + s.digits + s.punctuation,
+                                              k=int(r.random() * av.AdvancedValidator.MIN_LENGTH +
+                                                    av.AdvancedValidator.MAX_LENGTH - av.AdvancedValidator.MIN_LENGTH)))
             if self.is_valid(self.password):
                 print(f"Here is your Password: {self.password}")
                 return
