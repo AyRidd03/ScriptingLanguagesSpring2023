@@ -26,12 +26,15 @@ class PasswordGenerator(av.AdvancedValidator):
                 Advanced Validator and Password Validator.
                 :return:
         """
+        print(av.pv.PasswordValidator.LINE)
+        print("Generating Password:")
         while True:
             self.password = ''.join(r.choices(s.ascii_letters + s.digits + s.punctuation,
                                               k=int(r.random() * av.AdvancedValidator.MIN_LENGTH +
                                                     av.AdvancedValidator.MAX_LENGTH - av.AdvancedValidator.MIN_LENGTH)))
             if self.is_valid(self.password):
                 print(f"Here is your Password: {self.password}")
+                print(av.pv.PasswordValidator.LINE)
                 return
 
     def is_valid(self, password=None):

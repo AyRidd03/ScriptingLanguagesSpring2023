@@ -30,6 +30,7 @@ class AdvancedValidator(pv.PasswordValidator):
         else:
             print("Length Invalid")
             self.valid = False
+        print(pv.PasswordValidator.LINE)
         if self.valid:
             print(f"{self.password} is a Valid Password for the Advanced Password Validator")
         else:

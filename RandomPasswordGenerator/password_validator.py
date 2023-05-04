@@ -42,7 +42,7 @@ class PasswordValidator:
         """
         self.valid = True  # Innocent until proven invalid
         if self.debug:
-            print(f"Debug: Starting {self.is_valid.__name__}")
+            print(f"Debug: Starting {self.__ne__}.{self.is_valid.__name__}")
 
         print(PasswordValidator.LINE)
         if password is None:  # In case the password has no value
@@ -85,9 +85,9 @@ class PasswordValidator:
             self.valid = False
         print(PasswordValidator.LINE)
 
-        if self.valid:
+        if self.valid and "PasswordValidator" in str(self.__ne__):
             print(f"{self.password} is a Valid Password for the Basic Password Validator")
-        else:
+        elif not self.valid and "PasswordValidator" in str(self.__ne__):
             print(f"{self.password} is an Invalid Password for the Basic Password Validator")
 
     def is_caps_valid(self):
