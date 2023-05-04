@@ -1,7 +1,21 @@
+#!/usr/bin/env python3
+"""
+The Module for the Advanced Password Validator
+"""
+
+__author__ = 'Ayden Riddle'
+__version__ = '1.0'
+__date__ = '2023.05.03'
+__status__ = 'Finished'
+
 import password_validator as pv
 
 
 class AdvancedValidator(pv.PasswordValidator):
+    """
+    The Child of PasswordValidator and the Parent of PasswordGenerator.
+    Intended to have additional Parameters and Special Requirements.
+    """
     MIN_LENGTH = 7
     MAX_LENGTH = 15
     __SPECIAL_CHARS = "-_;,."
@@ -9,7 +23,7 @@ class AdvancedValidator(pv.PasswordValidator):
     def __init__(self, password=None, debug=False, generator=False):
         pv.PasswordValidator.__init__(self, password=password, debug=debug, generator=generator)
 
-    def is_valid(self, password):
+    def is_valid(self, password=None):
         pv.PasswordValidator.is_valid(self, password)
         if self.is_length_valid():
             print("Length Valid")
@@ -22,6 +36,11 @@ class AdvancedValidator(pv.PasswordValidator):
             print(f"{self.password} is an Invalid Password for the Advanced Password Validator")
 
     def is_length_valid(self):
+        """
+                Checks if self.password is the required length for MIN_LENGTH and MAX_LENGTH.
+                MAKE SURE self.password isn't None
+                :return: True or False
+        """
         if self.debug:
             print(f"Debug: Starting {self.is_length_valid.__name__}")
         count = 0

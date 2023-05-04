@@ -1,6 +1,11 @@
-import password_validator as pv
-import advanced_validator as av
-import  password_generator as pg
+#!/usr/bin/env python3
+
+__author__ = 'Ayden Riddle'
+__version__ = '1.0'
+__date__ = '2023.05.03'
+__status__ = 'Finished'
+
+import password_generator as pg
 
 
 def main():
