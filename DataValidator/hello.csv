@@ -1,8 +1,8 @@
-L_Name,Name,Number,Email
-Ridd, Ayden,402-706-4735,aydentheninja@gmail.com
-Xen, Matt,123-234-1002,xenosiscool37@yahoo.org
-Wow, Ray,531-200-2003,iamfpisdman27@protonmail.go
-James, Cody,502-234-2994,dragoonroseandeveryothername@hotmail.com
-Mic, Amber,402-345-1002,kirbyispinkandcute@simsmail.com
-Gatcha, Travis,223-309-4879,iamdefinitelynotaddicted@yugioh.com
-Proffesional, Zach,531-205-2704,urmomtwoelectricboogaloo@outlook.com
+#,L_Name,F_Name,Number,Email
+1,Ridd, Ayden,402-706-4735,aydentheninja@gmail.com
+2,Xen, Matt,123-234-1002,xenosiscool37@yahoo.org
+3,Wow, Ray,531-200-2003,iamfpisdman27@protonmail.go
+4,James, Cody,502-234-2994,dragoonroseandeveryothername@hotmail.com
+5,Mic, Amber,402-345-1002,kirbyispinkandcute@simsmail.com
+6,Gatcha, Travis,223-309-4879,iamdefinitelynotaddicted@yugioh.com
+7,Proffesional, Zach,531-205-2704,urmomtwoelectricboogaloo@outlook.com

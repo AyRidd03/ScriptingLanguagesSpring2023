@@ -2,9 +2,10 @@
 
 # the following are module level dunders (metadata) for the authorship information
 __author__ = 'Ayden Riddle'
-__version__ = '1.0'
+__version__ = '1.1'
 __date__ = '2023.04.25'
 __status__ = 'Development'
+
 import file_validator as fv
 import validator_menu as vm
 def main():
