@@ -2,9 +2,9 @@
 
 # the following are module level dunders (metadata) for the authorship information
 __author__ = 'Ayden Riddle'
-__version__ = '1.1'
-__date__ = '2023.04.25'
-__status__ = 'Development'
+__version__ = '1.5'
+__date__ = '2023.05.04'
+__status__ = 'Finished'
 
 import csv
 import re
@@ -13,29 +13,26 @@ LINE = "=" * 50
 
 
 class FileValidator:
-    def __init__(self, files=[]):
-        self.files = files
+    def __init__(self, files=[], debug=False):
+        self.files = files  # The list of file names
+        self.file = None  # the main name of the open file
+        self.debug = debug
+        # These are the lists of valid data pieces to prevent repetition
         self.phone_numbers = []
         self.emails = []
-        self.firstname = []
-        self.lastname = []
+        self.firstnames = []
+        self.lastnames = []
+        self.names = []
+
+        # These libraries are to help with storing data in the invalid and valid files
         self.valid_data = {"#": [], "L_Name": [], "F_Name": [], "Number": [], "Email": []}
         self.invalid_data = {"#": [], "L_Name": [], "F_Name": [], "Number": [], "Email": []}
-    def add_file(self, file):
-        self.files.append(file)
-        print(f"{file} has been added to the list of files")
 
-    def open_files(self):
-        for fname in self.files:
-            try:
-                self.open_file(fname)
-            except StopIteration:
-                print(f"ERROR: {fname} had a Stop Iteration Error and could not be continued.")
-            except FileNotFoundError:
-                print(f"ERROR: {fname} could not be found.")
-            except:
-                print(f"ERROR {fname} had an error and could not be opened or continued.")
-        print(LINE)
+    def add_file(self, file):
+        if self.file_name_valid(file):
+            self.files.append(file)
+            print(f"{file} has been added to the list of files")
+            print(LINE)
 
     def open_file(self, fname):
         try:
@@ -48,21 +45,58 @@ class FileValidator:
         except:
             print(f"ERROR {fname} had an error and could not be opened or continued.")
 
-    def write_file(self, fname, data):
+    def save_to_file(self, fname, data):
         try:
-            print("opening file")
+            if self.debug:
+                print(f"Debug Mode: Starting {self.save_to_file.__name__()}")
+                print(LINE)
+                print(f"We are writing to {fname}")
+                print("Here's the inputed data:")
+                print(data)
+                print("opening file")
+
             with open(fname, 'r', newline="") as self.file:
-                print("Making Reader")
-                reader = csv.reader(self.file, delimiter=",")
-                print("Using reader")
-                fieldnames = reader.__next__()
-            print("opening file")
+
+                if self.debug:
+                    print("Making Reader")
+
+                reader = list(csv.reader(self.file, delimiter=',', quotechar='|'))
+                fieldnames = reader[0]
+                saved_data = []
+
+                if self.debug:
+                    print("Using Reader")
+
+                for row in reader:
+                    if row == reader[0]:
+                        continue
+                    old_data = {}
+                    count = 0
+                    for i in fieldnames:
+                        old_data.update({i: row[count]})
+                        count += 1
+                    if self.debug:
+                        print(f"Old data line: {old_data}")
+                    if data == old_data:
+                        continue
+                    saved_data.append(old_data)
+                if self.debug:
+                    print(LINE)
+                    print("Saved Data:")
+                    print(saved_data)
+
+                    print("opening file")
             with open(fname, 'w', newline='') as self.file:
-                print("Making Writer")
+                if self.debug:
+                    print("Making Writer")
                 writer = csv.DictWriter(self.file, fieldnames=fieldnames)
-                print("Writing Header")
+                if self.debug:
+                    print("Writing Header")
                 writer.writeheader()
-                print("Writing Data")
+                if self.debug:
+                    print("Writing Old Data")
+                writer.writerows(saved_data)
+                print(f"Writing Data to {fname}")
                 writer.writerow(data)
         except:
             print(f"An Error has occured in Writing to {fname}")
@@ -85,29 +119,44 @@ class FileValidator:
         self.open_file(fname)
         data = list(csv.reader(self.file, delimiter=","))
         self.file.close()
-        headers = data[1]
+        headers = data[0]
         print(data)
         print(LINE)
         for i in data:
-            self.valid_data.update({headers[1]: i[1]})
-            self.invalid_data.update({headers[1]: i[1]})
+            if i == data[0]:
+                continue
+            self.valid_data.update({headers[0]: i[0]})
+            self.invalid_data.update({headers[0]: i[0]})
 
-            if self.name_valid((i[2],i[3])):
+            if self.name_valid((i[1], i[2])):
+                self.valid_data.update({headers[1]: i[1]})
                 self.valid_data.update({headers[2]: i[2]})
-                self.valid_data.update({headers[3]: i[3]})
+                self.invalid_data.update({headers[1]: "None"})
+                self.invalid_data.update({headers[2]: "None"})
             else:
+                self.valid_data.update({headers[1]: "None"})
+                self.valid_data.update({headers[2]: "None"})
+                self.invalid_data.update({headers[1]: i[1]})
                 self.invalid_data.update({headers[2]: i[2]})
-                self.invalid_data.update({headers[3]: i[3]})
 
             if self.phone_valid(i[3]):
                 self.valid_data.update({headers[3]: i[3]})
+                self.invalid_data.update({headers[3]: "None"})
             else:
+                self.valid_data.update({headers[3]: "None"})
                 self.invalid_data.update({headers[3]: i[3]})
 
             if self.email_valid(i[4]):
                 self.valid_data.update({headers[4]: i[4]})
+                self.invalid_data.update({headers[4]: "None"})
             else:
+                self.valid_data.update({headers[4]: "None"})
                 self.invalid_data.update({headers[4]: i[4]})
+
+            self.save_to_file("invalid.csv", self.invalid_data)
+            self.save_to_file("valid.csv", self.valid_data)
+            self.reset_data()
+            print(LINE)
     def reset_data(self):
         """
         Clears the Dictionaries to get ready for the next line of data
@@ -123,29 +172,33 @@ class FileValidator:
         :return: True or false
         """
         last_name, first_name = name
-        regex = re.compile(r'([A-Z])*([a-z])')
+        regex = re.compile(r'([A-Z])([a-z]{2,})')
+        if name in self.names:
+            print(f"{first_name} {last_name} is already added")
+            return True
+
         if re.fullmatch(regex, last_name):
             print(f"{last_name} is a valid last name")
-            if name not in self.phone_numbers:
+            if last_name not in self.lastnames:
                 print("Adding to list of last names")
-                self.phone_numbers.append(name)
+                self.lastnames.append(last_name)
             else:
                 print("This last name is already Added")
         else:
-            print(f"{name} is an invalid last name")
+            print(f"{last_name} is an invalid last name")
             return False
 
         if re.fullmatch(regex, first_name):
-            print(f"{first_name} is a valid last name")
-            if first_name not in self.phone_numbers:
+            print(f"{first_name} is a valid first name")
+            if first_name not in self.firstnames:
                 print("Adding to list of last names")
-                self.phone_numbers.append(name)
+                self.firstnames.append(first_name)
             else:
                 print("This first name is already Added")
         else:
-            print(f"{name} is an invalid last name")
+            print(f"{first_name} is an invalid first name")
             return False
-
+        self.names.append((last_name, first_name))
         return True  # Down here so it doesn't get lost
 
     def phone_valid(self, phone):
@@ -162,13 +215,12 @@ class FileValidator:
                 self.phone_numbers.append(phone)
             else:
                 print("This Phone # is already Added")
-                return False
             return True
         else:
             print(f"{phone} is an invalid phone #")
             return False
 
-    def emailvalid(self, email):
+    def email_valid(self, email):
         """
         Validates an Input String to make sure it is an email
         :param email:
@@ -183,12 +235,30 @@ class FileValidator:
                 self.emails.append(email)
             else:
                 print("This Email is already Added")
-                return False
             return True
         else:
             print(f"{email} is an invalid email")
             return False
 
+    def file_name_valid(self, fname):
+        """
+               Validates an Input String to make sure it is a valid file name
+               :param fname:
+               :return: True or False
+               """
+        regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+
+        if re.fullmatch(regex, fname):
+            print(f"{fname} is a valid file name")
+            if fname not in self.files:
+                print("Adding to list of Files")
+                self.emails.append(fname)
+            else:
+                print("This File is already Added")
+            return True
+        else:
+            print(f"{fname} is an invalid file name")
+            return False
     def get_phone_numbers(self):
         return self.phone_numbers
 
